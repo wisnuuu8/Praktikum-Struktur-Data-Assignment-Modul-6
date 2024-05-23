@@ -4,7 +4,7 @@
 
 **LATAR BELAKANG**
 
-Single Linked List (SLL) adalah struktur data linier yang terdiri dari serangkaian node di mana setiap node berisi data dan satu pointer yang menunjuk ke node berikutnya. Traversal hanya bisa dilakukan searah, dari node pertama (head) ke node terakhir yang menunjuk ke `null`.
+Single Linked List (SLL) adalah struktur data linier yang terdiri dari serangkaian node di mana setiap node berisi data dan satu pointer yang menunjuk ke node berikutnya. Traversal hanya bisa dilakukan searah, dari node pertama (head) ke node terakhir yang menunjuk ke `null`[1].
 
 Double Linked List (DLL) adalah struktur data linier yang serupa dengan SLL tetapi setiap node memiliki dua pointer: satu menunjuk ke node berikutnya dan satu lagi ke node sebelumnya. Ini memungkinkan traversal dua arah, baik maju maupun mundur.
 
@@ -26,7 +26,7 @@ Double Linked List (DLL) adalah struktur data linier yang serupa dengan SLL teta
 
 ### a) Single Linked List
 
-Single Linked List adalah struktur data yang terdiri dari kumpulan elemen yang disebut node, di mana setiap node berisi data dan satu pointer yang menunjuk ke node berikutnya. Elemen pertama dalam list disebut head dan elemen terakhir disebut tail, yang pointer-nya berisi `NULL`, menandakan akhir list. Linked List disusun secara sekuensial dan dinamis, memungkinkan penambahan dan penghapusan elemen dengan mudah. Struktur ini efisien untuk operasi traversal satu arah tetapi tidak untuk akses acak.
+Single Linked List adalah struktur data yang terdiri dari kumpulan elemen yang disebut node, di mana setiap node berisi data dan satu pointer yang menunjuk ke node berikutnya. Elemen pertama dalam list disebut head dan elemen terakhir disebut tail, yang pointer-nya berisi `NULL`, menandakan akhir list. Linked List disusun secara sekuensial dan dinamis, memungkinkan penambahan dan penghapusan elemen dengan mudah. Struktur ini efisien untuk operasi traversal satu arah tetapi tidak untuk akses acak[2].
 
 ### Linked List Circular
 
@@ -34,7 +34,7 @@ Linked List Circular adalah varian dari Single Linked List di mana node terakhir
 
 ### b) Double Linked List
 
-Double Linked List adalah struktur data yang mirip dengan Single Linked List tetapi setiap node memiliki dua pointer: satu menunjuk ke node berikutnya (next) dan satu lagi menunjuk ke node sebelumnya (prev). Hal ini memungkinkan traversal dua arah, baik maju maupun mundur, serta operasi penambahan dan penghapusan elemen di mana saja dalam list secara lebih efisien. Meskipun lebih fleksibel, Double Linked List memerlukan lebih banyak memori karena adanya dua pointer di setiap node. Struktur ini bermanfaat untuk aplikasi yang memerlukan akses dua arah dan manipulasi data yang lebih kompleks.
+Double Linked List adalah struktur data yang mirip dengan Single Linked List tetapi setiap node memiliki dua pointer: satu menunjuk ke node berikutnya (next) dan satu lagi menunjuk ke node sebelumnya (prev). Hal ini memungkinkan traversal dua arah, baik maju maupun mundur, serta operasi penambahan dan penghapusan elemen di mana saja dalam list secara lebih efisien[3]. Meskipun lebih fleksibel, Double Linked List memerlukan lebih banyak memori karena adanya dua pointer di setiap node. Struktur ini bermanfaat untuk aplikasi yang memerlukan akses dua arah dan manipulasi data yang lebih kompleks.
 
 **GUIDED**
 
@@ -309,11 +309,6 @@ using namespace std;: Ini adalah deklarasi yang mengizinkan penggunaan semua sim
 
 **Bagian 2**
 ```C++
-#include <iostream>
-using namespace std;
-
-///PROGRAM SINGLE LINKED LIST NON-CIRCULAR
-//Deklarasi Struct Node
 struct Node{
     //komponen/member
     int data;
@@ -1777,4 +1772,11 @@ Hanasui	30.000
 ```
 
 **DAFTAR PUSTAKA**
+
+Saptadi, A. H., & Sari, D. W. (2012). Analisis Algoritma Insertion Sort, Merge Sort Dan Implementasinya Dalam Bahasa Pemrograman C++. JURNAL INFOTEL - Informatika Telekomunikasi Elektronika, 4(2), 10. https://doi.org/10.20895/infotel.v4i2.103
+
+Wijaya, H., Wardhono, W. S., & Arwani, I. (2018). Implementasi Linked List pada Interaksi Antar Marker Augmented Reality untuk Operand dan Operator Aritmetika. Jurnal Pengembangan Teknologi Informasi Dan Ilmu Komputer (J-PTIIK) Universitas Brawijaya, 2(9), 3328–3332.
+
+Kadir, A. (2014). Teori dan Aplikasi Struktur Data Menggunakan Java. 1(December), 374.
+
 
