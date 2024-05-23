@@ -1756,4 +1756,25 @@ Interpretasi :
 
 Program dimulai dengan membuat objek list dari kelas DoublyLinkedList, kemudian menambahkan data awal berupa nama produk dan harganya ke dalam list. Selanjutnya, program menampilkan menu yang berisi operasi-operasi yang dapat dilakukan pada data produk skincare, seperti menambah data baru, menghapus data, dan mengupdate data. Pengguna diminta untuk memilih menu yang sesuai dengan kebutuhan mereka dengan memasukkan angka yang sesuai. Setelah pengguna memilih operasi yang diinginkan, program akan mengeksekusi operasi tersebut dan memberikan umpan balik sesuai dengan hasil operasi. Operasi-operasi tersebut mencakup penambahan data di belakang, penghapusan data berdasarkan nama produk, pembaruan data, penambahan data di urutan tertentu, penghapusan data di urutan tertentu, penghapusan semua data, dan penampilan semua data yang ada. Program akan terus berjalan hingga pengguna memilih menu untuk keluar dari program. Dengan demikian, program ini memberikan antarmuka yang interaktif dan mudah digunakan bagi pengguna untuk mengelola data produk skincare mereka.
 
+## Hasil output 
+```C++
+Toko Skincare Purwokerto
+1. Tambah Data
+2. Hapus Data
+3. Update Data
+4. Tambah Data Urutan Tertentu
+5. Hapus Data Urutan Tertentu
+6. Hapus Seluruh Data
+7. Tampilkan Data
+8. Exit
+Pilih menu: 7
+Nama Produk	Harga
+Originote	60.000
+Somethinc	150.000
+Skintific	100.000
+Wardah	50.000
+Hanasui	30.000
+```
+
 **DAFTAR PUSTAKA**
+
