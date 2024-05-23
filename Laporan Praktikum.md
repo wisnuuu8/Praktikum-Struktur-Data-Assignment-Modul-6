@@ -939,5 +939,821 @@ Enter your choice: 6
 
 **UNGUIDED 1**
 
+1.	Soal mengenai Single Linked List
+
+Buatlah program menu Single Linked List Non-Circular untuk menyimpan Nama dan usia mahasiswa, dengan menggunakan inputan dari user. Lakukan operasi berikut:
+a.	Masukkan data sesuai urutan berikut. (Gunakan insert depan, belakang atau tengah). Data pertama yang dimasukkan adalah nama dan usia anda.
+
+[Nama_anda]	[Usia_anda]
+John	19
+Jane	20
+Michael	18
+Yusuke	19
+Akechi	20
+Hoshino	18
+Karin	18
+b.	Hapus data Akechi
+c.	Tambahkan data berikut diantara John dan Jane : Futaba	18
+d.	Tambahkan data berikut diawal : Igor	20
+e.	Ubah data Michael menjadi : Reyn	18
+f.	Tampilkan seluruh data
+
+```C++
+#include <iostream>
+using namespace std;
+
+// Node structure
+struct Node {
+    string nama;
+    int usia;
+    Node* next;
+};
+
+// Linked list class
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    // Constructor
+    LinkedList() {
+        head = nullptr;
+    }
+
+    // Destructor
+    ~LinkedList() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    // Insert node at the front
+    void insertFront(string nama, int usia) {
+        Node* newNode = new Node;
+        newNode->nama = nama;
+        newNode->usia = usia;
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Insert node at the back
+    void insertBack(string nama, int usia) {
+        Node* newNode = new Node;
+        newNode->nama = nama;
+        newNode->usia = usia;
+        newNode->next = nullptr;
+        if (head == nullptr) {
+            head = newNode;
+            return;
+        }
+        Node* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
+
+    // Insert node after a specific node
+    void insertAfter(string prevNama, string nama, int usia) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->nama == prevNama) {
+                Node* newNode = new Node;
+                newNode->nama = nama;
+                newNode->usia = usia;
+                newNode->next = current->next;
+                current->next = newNode;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama " << prevNama << " tidak ditemukan" << endl;
+    }
+
+    // Delete node by name
+    void deleteNode(string nama) {
+        if (head == nullptr) {
+            cout << "Linked list kosong" << endl;
+            return;
+        }
+        if (head->nama == nama) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+        Node* current = head;
+        while (current->next != nullptr) {
+            if (current->next->nama == nama) {
+                Node* temp = current->next;
+                current->next = current->next->next;
+                delete temp;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama " << nama << " tidak ditemukan" << endl;
+    }
+
+    // Update node data by name
+    void updateNode(string nama, string newNama, int newUsia) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->nama == nama) {
+                current->nama = newNama;
+                current->usia = newUsia;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama " << nama << " tidak ditemukan" << endl;
+    }
+
+    // Display all nodes
+    void display() {
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->nama << "\t" << current->usia << endl;
+            current = current->next;
+        }
+    }
+};
+
+int main() {
+    LinkedList list;
+
+    // Menambahkan data awal (nama dan usia Anda)
+    list.insertFront("Nama_anda", Usia_anda);
+
+    // Menambahkan data sesuai urutan
+    list.insertBack("John", 19);
+    list.insertBack("Jane", 20);
+    list.insertBack("Michael", 18);
+    list.insertBack("Yusuke", 19);
+    list.insertBack("Akechi", 20);
+    list.insertBack("Hoshino", 18);
+    list.insertBack("Karin", 18);
+
+    // Hapus data Akechi
+    list.deleteNode("Akechi");
+
+    // Tambahkan data Futaba setelah John dan Jane
+    list.insertAfter("John", "Futaba", 18);
+
+    // Tambahkan data Igor di awal
+    list.insertFront("Igor", 20);
+
+    // Ubah data Michael menjadi Reyn
+    list.updateNode("Michael", "Reyn", 18);
+
+    // Tampilkan seluruh data
+    cout << "Nama\tUsia" << endl;
+    list.display();
+
+    return 0;
+}
+```
+**Bagian 1**
+```C++
+#include <iostream>
+using namespace std;
+```
+Interpretasi : 
+
+include iostream : Ini adalah preprocessor directive yang menyertakan pustaka input-output standar C++ ke dalam program. Ini diperlukan untuk menggunakan fungsi-fungsi dasar seperti cout dan cin untuk output dan input data.
+
+include string : Ini adalah preprocessor directive yang menyertakan pustaka string ke dalam program. Pustaka ini memberikan fungsionalitas untuk bekerja dengan tipe data string di C++, seperti deklarasi, manipulasi, dan operasi pada string.
+
+using namespace std;: Ini adalah deklarasi yang mengizinkan penggunaan semua simbol dalam namespace std tanpa menuliskan std:: di depannya setiap kali digunakan. Namespace std berisi semua fungsi, tipe data, dan objek yang didefinisikan dalam pustaka standar C++.
+
+**Bagian 2**
+```C++
+struct Node {
+    string nama;
+    int usia;
+    Node* next;
+};
+
+class LinkedList {
+private:
+    Node* head;
+
+public:
+    LinkedList() {
+        head = nullptr;
+    }
+
+    ~LinkedList() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    void insertFront(string nama, int usia) {
+        Node* newNode = new Node;
+        newNode->nama = nama;
+        newNode->usia = usia;
+        newNode->next = head;
+        head = newNode;
+    }
+
+    void insertBack(string nama, int usia) {
+        Node* newNode = new Node;
+        newNode->nama = nama;
+        newNode->usia = usia;
+        newNode->next = nullptr;
+        if (head == nullptr) {
+            head = newNode;
+            return;
+        }
+        Node* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newNode;
+    }
+
+    void insertAfter(string prevNama, string nama, int usia) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->nama == prevNama) {
+                Node* newNode = new Node;
+                newNode->nama = nama;
+                newNode->usia = usia;
+                newNode->next = current->next;
+                current->next = newNode;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama " << prevNama << " tidak ditemukan" << endl;
+    }
+
+    void deleteNode(string nama) {
+        if (head == nullptr) {
+            cout << "Linked list kosong" << endl;
+            return;
+        }
+        if (head->nama == nama) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+        }
+        Node* current = head;
+        while (current->next != nullptr) {
+            if (current->next->nama == nama) {
+                Node* temp = current->next;
+                current->next = current->next->next;
+                delete temp;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama " << nama << " tidak ditemukan" << endl;
+    }
+
+    void updateNode(string nama, string newNama, int newUsia) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->nama == nama) {
+                current->nama = newNama;
+                current->usia = newUsia;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama " << nama << " tidak ditemukan" << endl;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->nama << "\t" << current->usia << endl;
+            current = current->next;
+        }
+    }
+};
+```
+Interpretasi : 
+
+Struktur data tersebut terdiri dari dua elemen utama: sebuah struktur Node yang menyimpan data nama dan usia dalam bentuk string dan integer, serta pointer next yang menunjukkan ke node berikutnya dalam linked list. Selain itu, terdapat kelas LinkedList yang bertanggung jawab atas manajemen linked list tersebut. Kelas ini memiliki fungsi-fungsi seperti insertFront, insertBack, insertAfter, deleteNode, updateNode, dan display, yang memungkinkan penambahan, penghapusan, pembaruan, dan penampilan data dalam linked list. Dengan menggunakan kelas LinkedList, pengguna dapat membuat, mengelola, dan mengoperasikan linked list untuk menyimpan data nama dan usia mahasiswa. Prosesnya dimulai dari inisialisasi linked list, diikuti dengan operasi-operasi seperti penambahan, penghapusan, pembaruan, dan penampilan data, sesuai dengan kebutuhan pengguna.
+
+**Bagian 3**
+```C++
+int main() {
+    LinkedList list;
+
+    list.insertFront("Nama_anda", Usia_anda);
+
+    list.insertBack("John", 19);
+    list.insertBack("Jane", 20);
+    list.insertBack("Michael", 18);
+    list.insertBack("Yusuke", 19);
+    list.insertBack("Akechi", 20);
+    list.insertBack("Hoshino", 18);
+    list.insertBack("Karin", 18);
+
+    // Hapus data Akechi
+    list.deleteNode("Akechi");
+
+    // Tambahkan data Futaba setelah John dan Jane
+    list.insertAfter("John", "Futaba", 18);
+
+    // Tambahkan data Igor di awal
+    list.insertFront("Igor", 20);
+
+    // Ubah data Michael menjadi Reyn
+    list.updateNode("Michael", "Reyn", 18);
+
+    // Tampilkan seluruh data
+    cout << "Nama\tUsia" << endl;
+    list.display();
+
+    return 0;
+}
+```
+Interpretasi :
+
+Program menginisialisasi objek LinkedList yang digunakan untuk menyimpan dan mengelola data. Data awal dimasukkan ke dalam linked list menggunakan fungsi insertFront() dan insertBack(), yang menempatkan data ke depan dan belakang linked list secara berurutan. Selanjutnya, program melakukan operasi seperti penghapusan data dengan menggunakan fungsi deleteNode() untuk menghapus data "Akechi", dan penambahan data "Futaba" setelah data "John" menggunakan fungsi insertAfter(). Data "Igor" dimasukkan di awal linked list melalui fungsi insertFront(), sedangkan data "Michael" diubah namanya menjadi "Reyn" menggunakan fungsi updateNode(). Akhirnya, program menampilkan seluruh data yang tersimpan dalam linked list menggunakan fungsi display()
+
+## Hasil output
+```C++
+Nama    Usia
+Igor    20
+Nama_anda    Usia_anda
+John    19
+Futaba    18
+Jane    20
+Reyn    18
+Yusuke    19
+Hoshino    18
+Karin    18
+```
+
 **UNGUIDED 2**
 
+2.	Soal mengenai Double Linked List
+Modifikasi Guided Double Linked List dilakukan dengan penambahan operasi untuk menambah data, menghapus, dan update di tengah / di urutan tertentu yang diminta. Selain itu, buatlah agar tampilannya menampilkan Nama produk dan harga.
+Nama Produk	Harga
+Originote	60.000
+Somethinc	150.000
+Skintific	100.000
+Wardah	50.000
+Hanasui	30.000
+
+Case:
+1.	Tambahkan produk Azarine dengan harga 65000 diantara Somethinc dan Skintific
+2.	Hapus produk wardah
+3.	Update produk Hanasui menjadi Cleora dengan harga 55.000
+4.	Tampilkan menu seperti dibawah ini
+Toko Skincare Purwokerto
+1.	Tambah Data
+2.	Hapus Data
+3.	Update Data
+4.	Tambah Data Urutan Tertentu
+5.	Hapus Data Urutan Tertentu
+6.	Hapus Seluruh Data
+7.	Tampilkan Data
+8.	Exit
+Pada menu 7, tampilan akhirnya akan menjadi seperti dibawah ini :
+
+Nama Produk	Harga
+Originote	60.000
+Somethinc	150.000
+Azarine	65.000
+Skintific	100.000
+Cleora	55.000
+
+```C++
+#include <iostream>
+using namespace std;
+
+// Node structure
+struct Node {
+    string namaProduk;
+    int harga;
+    Node* prev;
+    Node* next;
+};
+
+// Linked list class
+class DoublyLinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    // Constructor
+    DoublyLinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Destructor
+    ~DoublyLinkedList() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    // Insert node at the back
+    void insertBack(string namaProduk, int harga) {
+        Node* newNode = new Node;
+        newNode->namaProduk = namaProduk;
+        newNode->harga = harga;
+        newNode->prev = nullptr;
+        newNode->next = nullptr;
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+
+    // Insert node after a specific node
+    void insertAfter(string prevNamaProduk, string namaProduk, int harga) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->namaProduk == prevNamaProduk) {
+                Node* newNode = new Node;
+                newNode->namaProduk = namaProduk;
+                newNode->harga = harga;
+                newNode->prev = current;
+                newNode->next = current->next;
+                if (current->next != nullptr) {
+                    current->next->prev = newNode;
+                } else {
+                    tail = newNode;
+                }
+                current->next = newNode;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama produk " << prevNamaProduk << " tidak ditemukan" << endl;
+    }
+
+    // Delete node by name
+    void deleteNode(string namaProduk) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->namaProduk == namaProduk) {
+                if (current == head) {
+                    head = current->next;
+                    if (head != nullptr) {
+                        head->prev = nullptr;
+                    }
+                } else if (current == tail) {
+                    tail = current->prev;
+                    tail->next = nullptr;
+                } else {
+                    current->prev->next = current->next;
+                    current->next->prev = current->prev;
+                }
+                delete current;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama produk " << namaProduk << " tidak ditemukan" << endl;
+    }
+
+    // Update node data by name
+    void updateNode(string namaProduk, string newNamaProduk, int newHarga) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->namaProduk == namaProduk) {
+                current->namaProduk = newNamaProduk;
+                current->harga = newHarga;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama produk " << namaProduk << " tidak ditemukan" << endl;
+    }
+
+    // Display all nodes
+    void display() {
+        cout << "Nama Produk\tHarga" << endl;
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->namaProduk << "\t\t" << current->harga << endl;
+            current = current->next;
+        }
+    }
+};
+
+int main() {
+    DoublyLinkedList list;
+
+    // Menambahkan data awal
+    list.insertBack("Originote", 60000);
+    list.insertBack("Somethinc", 150000);
+    list.insertBack("Skintific", 100000);
+    list.insertBack("Wardah", 50000);
+    list.insertBack("Hanasui", 30000);
+
+    int choice;
+    string namaProduk, prevNamaProduk, newNamaProduk;
+    int harga, newHarga;
+
+    do {
+        cout << "Toko Skincare Purwokerto" << endl;
+        cout << "1. Tambah Data" << endl;
+        cout << "2. Hapus Data" << endl;
+        cout << "3. Update Data" << endl;
+        cout << "4. Tambah Data Urutan Tertentu" << endl;
+        cout << "5. Hapus Data Urutan Tertentu" << endl;
+        cout << "6. Hapus Seluruh Data" << endl;
+        cout << "7. Tampilkan Data" << endl;
+        cout << "8. Exit" << endl;
+        cout << "Pilih menu: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Masukkan Nama Produk: ";
+                cin >> namaProduk;
+                cout << "Masukkan Harga: ";
+                cin >> harga;
+                list.insertBack(namaProduk, harga);
+                break;
+            case 2:
+                cout << "Masukkan Nama Produk yang akan dihapus: ";
+                cin >> namaProduk;
+                list.deleteNode(namaProduk);
+                break;
+            case 3:
+                cout << "Masukkan Nama Produk yang akan diupdate: ";
+                cin >> namaProduk;
+                cout << "Masukkan Nama Produk Baru: ";
+                cin >> newNamaProduk;
+                cout << "Masukkan Harga Baru: ";
+                cin >> newHarga;
+                list.updateNode(namaProduk, newNamaProduk, newHarga);
+                break;
+            case 4:
+                cout << "Masukkan Nama Produk Sebelumnya: ";
+                cin >> prevNamaProduk;
+                cout << "Masukkan Nama Produk Baru: ";
+                cin >> namaProduk;
+                cout << "Masukkan Harga: ";
+                cin >> harga;
+                list.insertAfter(prevNamaProduk, namaProduk, harga);
+                break;
+            case 5:
+                cout << "Masukkan Nama Produk yang akan dihapus: ";
+                cin >> namaProduk;
+                list.deleteNode(namaProduk);
+                break;
+            case 6:
+                list.~DoublyLinkedList();
+                break;
+            case 7:
+                list.display();
+                break;
+            case 8:
+                cout << "Terima kasih!" << endl;
+                break;
+            default:
+                cout << "Pilihan tidak valid." << endl;
+                break;
+        }
+    } while (choice != 8);
+
+    return 0;
+}
+```
+**Bagian 1**
+```C++
+#include <iostream>
+using namespace std;
+```
+Interpretasi : 
+
+include iostream : Ini adalah preprocessor directive yang menyertakan pustaka input-output standar C++ ke dalam program. Ini diperlukan untuk menggunakan fungsi-fungsi dasar seperti cout dan cin untuk output dan input data.
+
+include string : Ini adalah preprocessor directive yang menyertakan pustaka string ke dalam program. Pustaka ini memberikan fungsionalitas untuk bekerja dengan tipe data string di C++, seperti deklarasi, manipulasi, dan operasi pada string.
+
+using namespace std;: Ini adalah deklarasi yang mengizinkan penggunaan semua simbol dalam namespace std tanpa menuliskan std:: di depannya setiap kali digunakan. Namespace std berisi semua fungsi, tipe data, dan objek yang didefinisikan dalam pustaka standar C++.
+
+
+**Bagian 2**
+```C++
+struct Node {
+    string namaProduk;
+    int harga;
+    Node* prev;
+    Node* next;
+};
+
+class DoublyLinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    DoublyLinkedList() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    ~DoublyLinkedList() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    void insertBack(string namaProduk, int harga) {
+        Node* newNode = new Node;
+        newNode->namaProduk = namaProduk;
+        newNode->harga = harga;
+        newNode->prev = nullptr;
+        newNode->next = nullptr;
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+
+    void insertAfter(string prevNamaProduk, string namaProduk, int harga) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->namaProduk == prevNamaProduk) {
+                Node* newNode = new Node;
+                newNode->namaProduk = namaProduk;
+                newNode->harga = harga;
+                newNode->prev = current;
+                newNode->next = current->next;
+                if (current->next != nullptr) {
+                    current->next->prev = newNode;
+                } else {
+                    tail = newNode;
+                }
+                current->next = newNode;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama produk " << prevNamaProduk << " tidak ditemukan" << endl;
+    }
+
+    void deleteNode(string namaProduk) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->namaProduk == namaProduk) {
+                if (current == head) {
+                    head = current->next;
+                    if (head != nullptr) {
+                        head->prev = nullptr;
+                    }
+                } else if (current == tail) {
+                    tail = current->prev;
+                    tail->next = nullptr;
+                } else {
+                    current->prev->next = current->next;
+                    current->next->prev = current->prev;
+                }
+                delete current;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama produk " << namaProduk << " tidak ditemukan" << endl;
+    }
+
+    void updateNode(string namaProduk, string newNamaProduk, int newHarga) {
+        Node* current = head;
+        while (current != nullptr) {
+            if (current->namaProduk == namaProduk) {
+                current->namaProduk = newNamaProduk;
+                current->harga = newHarga;
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Node dengan nama produk " << namaProduk << " tidak ditemukan" << endl;
+    }
+
+    void display() {
+        cout << "Nama Produk\tHarga" << endl;
+        Node* current = head;
+        while (current != nullptr) {
+            cout << current->namaProduk << "\t\t" << current->harga << endl;
+            current = current->next;
+        }
+    }
+};
+```
+Interpretasi :
+
+Kode yang diberikan mendefinisikan sebuah struktur `Node` yang menyimpan informasi tentang produk, seperti nama dan harga, serta pointer ke node sebelumnya dan node berikutnya dalam linked list ganda. Selanjutnya, ada kelas `DoublyLinkedList` yang mengelola linked list ganda tersebut. Dengan konstruktor, kelas ini menginisialisasi pointer `head` dan `tail` ke `nullptr`, menunjukkan bahwa linked list awalnya kosong. Metode destruktor bertanggung jawab untuk menghapus semua node dalam linked list dengan melakukan iterasi dari `head` hingga `tail` dan menghapusnya satu per satu. Metode `insertBack` memasukkan node baru ke akhir linked list, sementara `insertAfter` memungkinkan penambahan node baru setelah node tertentu dalam linked list. Metode `deleteNode` menghapus node dengan nama produk yang cocok, sedangkan `updateNode` memperbarui nama dan harga node yang cocok. Akhirnya, `display()` digunakan untuk menampilkan semua produk dalam linked list dengan format yang ditentukan. Dengan demikian, kelas `DoublyLinkedList` memungkinkan pengelolaan data produk dengan cara menambah, menghapus, memperbarui, dan menampilkan data dengan efisien dalam linked list ganda.
+
+**Bagian 3**
+```C++
+int main() {
+    DoublyLinkedList list;
+
+    // Menambahkan data awal
+    list.insertBack("Originote", 60000);
+    list.insertBack("Somethinc", 150000);
+    list.insertBack("Skintific", 100000);
+    list.insertBack("Wardah", 50000);
+    list.insertBack("Hanasui", 30000);
+
+    int choice;
+    string namaProduk, prevNamaProduk, newNamaProduk;
+    int harga, newHarga;
+
+    do {
+        cout << "Toko Skincare Purwokerto" << endl;
+        cout << "1. Tambah Data" << endl;
+        cout << "2. Hapus Data" << endl;
+        cout << "3. Update Data" << endl;
+        cout << "4. Tambah Data Urutan Tertentu" << endl;
+        cout << "5. Hapus Data Urutan Tertentu" << endl;
+        cout << "6. Hapus Seluruh Data" << endl;
+        cout << "7. Tampilkan Data" << endl;
+        cout << "8. Exit" << endl;
+        cout << "Pilih menu: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Masukkan Nama Produk: ";
+                cin >> namaProduk;
+                cout << "Masukkan Harga: ";
+                cin >> harga;
+                list.insertBack(namaProduk, harga);
+                break;
+            case 2:
+                cout << "Masukkan Nama Produk yang akan dihapus: ";
+                cin >> namaProduk;
+                list.deleteNode(namaProduk);
+                break;
+            case 3:
+                cout << "Masukkan Nama Produk yang akan diupdate: ";
+                cin >> namaProduk;
+                cout << "Masukkan Nama Produk Baru: ";
+                cin >> newNamaProduk;
+                cout << "Masukkan Harga Baru: ";
+                cin >> newHarga;
+                list.updateNode(namaProduk, newNamaProduk, newHarga);
+                break;
+            case 4:
+                cout << "Masukkan Nama Produk Sebelumnya: ";
+                cin >> prevNamaProduk;
+                cout << "Masukkan Nama Produk Baru: ";
+                cin >> namaProduk;
+                cout << "Masukkan Harga: ";
+                cin >> harga;
+                list.insertAfter(prevNamaProduk, namaProduk, harga);
+                break;
+            case 5:
+                cout << "Masukkan Nama Produk yang akan dihapus: ";
+                cin >> namaProduk;
+                list.deleteNode(namaProduk);
+                break;
+            case 6:
+                list.~DoublyLinkedList();
+                break;
+            case 7:
+                list.display();
+                break;
+            case 8:
+                cout << "Terima kasih!" << endl;
+                break;
+            default:
+                cout << "Pilihan tidak valid." << endl;
+                break;
+        }
+    } while (choice != 8);
+
+    return 0;
+}
+```
+Interpretasi :
+
+Program dimulai dengan membuat objek list dari kelas DoublyLinkedList, kemudian menambahkan data awal berupa nama produk dan harganya ke dalam list. Selanjutnya, program menampilkan menu yang berisi operasi-operasi yang dapat dilakukan pada data produk skincare, seperti menambah data baru, menghapus data, dan mengupdate data. Pengguna diminta untuk memilih menu yang sesuai dengan kebutuhan mereka dengan memasukkan angka yang sesuai. Setelah pengguna memilih operasi yang diinginkan, program akan mengeksekusi operasi tersebut dan memberikan umpan balik sesuai dengan hasil operasi. Operasi-operasi tersebut mencakup penambahan data di belakang, penghapusan data berdasarkan nama produk, pembaruan data, penambahan data di urutan tertentu, penghapusan data di urutan tertentu, penghapusan semua data, dan penampilan semua data yang ada. Program akan terus berjalan hingga pengguna memilih menu untuk keluar dari program. Dengan demikian, program ini memberikan antarmuka yang interaktif dan mudah digunakan bagi pengguna untuk mengelola data produk skincare mereka.
+
+**DAFTAR PUSTAKA**
